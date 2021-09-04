@@ -1,4 +1,7 @@
+import { StatusCodes } from "http-status-codes";
 import { Student } from "../types/Student";
+import { HttpError } from "../types/HttpError";
+
 
 const students: Student[] = [
   {
@@ -30,4 +33,30 @@ function addStudent(student: Student) {
  */
 const getStudents = () => Promise.resolve(Object.freeze([...students]));
 
-export { addStudent, getStudents };
+/**
+ * Update a student
+ * @param id Student id
+ * @param studentData Student data
+ * @returns updated student
+ */
+function updateStudent(id: number, studentData: Student) {
+  const student = students.find(e => e.id === id);
+
+  if (!student) {
+    return Promise.reject({
+      status: StatusCodes.NOT_FOUND,
+      json: {
+        message: "User not found",
+      }
+    } as HttpError)
+  }
+
+  Object.assign(student, studentData);
+  return Promise.resolve(student);
+}
+
+export {
+  addStudent,
+  getStudents,
+  updateStudent,
+};

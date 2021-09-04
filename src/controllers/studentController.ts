@@ -1,6 +1,7 @@
 import * as StudentsDB from "../db/students";
 import { Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
+import { HttpError } from "../types/HttpError";
 
 export class StudentsController {
   async get(_: Request, res: Response) {
@@ -13,5 +14,13 @@ export class StudentsController {
     const newStudent = await StudentsDB.addStudent(req.body);
 
     return res.status(StatusCodes.CREATED).json(newStudent);
+  }
+
+  async update(req: Request, res: Response) {
+    StudentsDB.updateStudent(+req.params.id, req.body).then(student => {
+      res.status(StatusCodes.OK).json(student);
+    }).catch((error: HttpError) => {
+      res.status(error.status).json(error.json);
+    })
   }
 }

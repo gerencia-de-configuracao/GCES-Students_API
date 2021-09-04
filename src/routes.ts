@@ -1,5 +1,5 @@
 import { celebrate, Joi } from "celebrate";
-import express, { response } from "express";
+import express from "express";
 import { StudentsController } from "./controllers/studentController";
 import { StudentSchema } from "./types/Student";
 
@@ -15,6 +15,13 @@ routes.post(
   celebrate({ body: Joi.object().keys(StudentSchema) }),
   studentsController.create
 );
-//? Why not add an update, delete and get one routes/
+routes.put(
+  "/students/:id",
+  celebrate({
+    params: Joi.object().keys({ id: Joi.number() }),
+    body: Joi.object().keys(StudentSchema),
+  }),
+  studentsController.update
+);
 
 export default routes;
