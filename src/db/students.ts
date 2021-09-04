@@ -48,15 +48,36 @@ function updateStudent(id: number, studentData: Student) {
       json: {
         message: "User not found",
       }
-    } as HttpError)
+    } as HttpError);
   }
 
   Object.assign(student, studentData);
   return Promise.resolve(student);
 }
 
+/**
+ * Delete a student
+ * @param id Student id
+ */
+ function deleteStudent(id: number) {
+  const studentPosition = students.findIndex(e => e.id === id);
+
+  if (studentPosition === -1) {
+    return Promise.reject({
+      status: StatusCodes.NOT_FOUND,
+      json: {
+        message: "User not found",
+      }
+    } as HttpError);
+  }
+
+  students.splice(studentPosition, 1);
+  return Promise.resolve();
+ }
+
 export {
   addStudent,
   getStudents,
   updateStudent,
+  deleteStudent,
 };

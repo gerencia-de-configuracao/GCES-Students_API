@@ -23,5 +23,13 @@ routes.put(
   }),
   studentsController.update
 );
+routes.delete(
+  "/students/:id",
+  celebrate({
+    params: Joi.object().keys({ id: Joi.number() }),
+  }),
+  studentsController.delete
+);
+
 
 export default routes;
