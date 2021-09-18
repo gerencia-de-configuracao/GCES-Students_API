@@ -25,8 +25,8 @@ export class StudentsController {
   }
 
   async delete(req: Request, res: Response) {
-    StudentsDB.deleteStudent(+req.params.id).then(student => {
-      res.status(StatusCodes.OK).json(student);
+    StudentsDB.deleteStudent(+req.params.id).then(() => {
+      res.status(StatusCodes.OK).send();
     }).catch((error: HttpError) => {
       res.status(error.status).json(error.json);
     })

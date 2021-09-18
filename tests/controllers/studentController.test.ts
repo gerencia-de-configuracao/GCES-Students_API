@@ -32,4 +32,42 @@ describe("Test student requests", () => {
       .send(newStudent)
       .then((res) => expect(res.body).toMatchObject({ id: 2, ...newStudent }));
   });
+
+
+  it("should update the first student", async () => {
+    const studentID = 1;
+    const requestBody = {
+      "name": "Johnny Doe",
+      "email": "john.doe@example.com",
+      "city": "Belo Horizonte",
+      "birth": "1999-11-13T02:00:00.000Z"
+    }
+
+    await supertest(app)
+      .put(`/students/${studentID}`)
+      .send(requestBody)
+      .expect(200)
+      .then((res) => expect(res.body)
+        .toMatchObject({ id: studentID, ...requestBody }));
+  });
+
+  it("should delete the first student", async () => {
+    const studentID = 1;
+
+    await supertest(app)
+      .delete(`/students/${studentID}`)
+      .expect(200);
+  });
+
+  it(`should return "User not found"`, async () => {
+    const studentID = 5;
+
+    await supertest(app)
+      .delete(`/students/${studentID}`)
+      .expect(404)
+      .then((res) => expect(res.body)
+        .toMatchObject({
+          message: "User not found",
+        }));;
+  });
 });
