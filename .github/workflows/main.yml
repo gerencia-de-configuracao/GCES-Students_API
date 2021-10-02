@@ -10,7 +10,7 @@ jobs:
     name: 'Setup CI/CD'
     runs-on: ubuntu-latest
     env:
-      NODE_ENV: 'production'
+      NODE_ENV: 'development'
       PORT: '5001'
     steps:
       - uses: actions/checkout@v2
