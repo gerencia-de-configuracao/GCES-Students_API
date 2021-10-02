@@ -10,17 +10,17 @@ jobs:
     name: 'Setup CI/CD'
     runs-on: ubuntu-latest
     env:
-      NODE_ENV: 'development'
+      NODE_ENV: 'production'
       PORT: '5001'
     steps:
       - uses: actions/checkout@v2
       - name: 'Install dependencies'
         run: npm install
       - name: 'Run tests'
+        env:
+          NODE_ENV: 'development'
         run: npm run test
       - name: 'Build application'
-        env:
-          NODE_ENV: 'production'
         run: npm run build
       - name: 'Show /dist'
         run: ls dist
