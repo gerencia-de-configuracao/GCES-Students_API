@@ -1,0 +1,24 @@
+name: Students API Pipeline
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  setup:
+    name: 'Setup CI/CD'
+    runs-on: ubuntu-latest
+    env:
+      NODE_ENV: 'production'
+      PORT: '5001'
+    steps:
+      - uses: actions/checkout@v2
+      - name: 'Install dependencies'
+        run: npm install
+      - name: 'Run tests'
+        run: npm run test
+      - name: 'Build application'
+        run: npm run build
+      - name: 'Show /dist'
+        run: ls dist

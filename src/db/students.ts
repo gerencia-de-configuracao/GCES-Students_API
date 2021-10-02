@@ -1,15 +1,14 @@
-import { StatusCodes } from "http-status-codes";
-import { Student } from "../types/Student";
-import { HttpError } from "../types/HttpError";
-
+import { StatusCodes } from 'http-status-codes';
+import { Student } from '../types/Student';
+import { HttpError } from '../types/HttpError';
 
 const students: Student[] = [
   {
     id: 1,
-    name: "John Doe",
-    email: "john.doe@example.com",
-    city: "Belo Horizonte",
-    birth: new Date("11/13/1999"),
+    name: 'John Doe',
+    email: 'john.doe@example.com',
+    city: 'Belo Horizonte',
+    birth: new Date('11/13/1999'),
   },
 ];
 
@@ -40,14 +39,14 @@ const getStudents = () => Promise.resolve(Object.freeze([...students]));
  * @returns updated student
  */
 function updateStudent(id: number, studentData: Student) {
-  const student = students.find(e => e.id === id);
+  const student = students.find((e) => e.id === id);
 
   if (!student) {
     return Promise.reject({
       status: StatusCodes.NOT_FOUND,
       json: {
-        message: "User not found",
-      }
+        message: 'User not found',
+      },
     } as HttpError);
   }
 
@@ -59,25 +58,20 @@ function updateStudent(id: number, studentData: Student) {
  * Delete a student
  * @param id Student id
  */
- function deleteStudent(id: number) {
-  const studentPosition = students.findIndex(e => e.id === id);
+function deleteStudent(id: number) {
+  const studentPosition = students.findIndex((e) => e.id === id);
 
   if (studentPosition === -1) {
     return Promise.reject({
       status: StatusCodes.NOT_FOUND,
       json: {
-        message: "User not found",
-      }
+        message: 'User not found',
+      },
     } as HttpError);
   }
 
   students.splice(studentPosition, 1);
   return Promise.resolve();
- }
+}
 
-export {
-  addStudent,
-  getStudents,
-  updateStudent,
-  deleteStudent,
-};
+export { addStudent, getStudents, updateStudent, deleteStudent };
