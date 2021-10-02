@@ -19,6 +19,8 @@ jobs:
       - name: 'Run tests'
         run: npm run test
       - name: 'Build application'
+        env:
+          NODE_ENV: 'production'
         run: npm run build
       - name: 'Show /dist'
         run: ls dist
