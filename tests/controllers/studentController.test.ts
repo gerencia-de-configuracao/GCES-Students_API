@@ -20,7 +20,7 @@ jest.mock('../../src/db/students', () => {
       name: 'Johnny Doe',
       email: 'john.doe@example.com',
       city: 'Belo Horizonte',
-      birth: '1999-11-13T02:00:00.000Z',
+      birth: new Date('11/13/1999').toISOString(),
     };
   };
 
@@ -30,7 +30,7 @@ jest.mock('../../src/db/students', () => {
       name: 'John Doe 2',
       email: 'john.doe.2@example.com',
       city: 'Belo Horizonte',
-      birth: '1999-11-13T02:00:00.000Z',
+      birth: new Date('11/13/1999').toISOString(),
     };
 
     students.push(newStudent);
@@ -77,7 +77,7 @@ describe('Test student requests', () => {
       name: 'Johnny Doe',
       email: 'john.doe@example.com',
       city: 'Belo Horizonte',
-      birth: '1999-11-13T02:00:00.000Z',
+      birth: new Date('11/13/1999').toISOString(),
     };
 
     await supertest(app)
