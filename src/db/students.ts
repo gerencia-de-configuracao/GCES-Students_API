@@ -19,7 +19,7 @@ async function addStudent(student: Student): Promise<Student> {
 }
 
 /**
- * Returns student list
+ * Returns student list in ASC order
  * @returns Students
  */
 async function getStudents(): Promise<Student[]> {
