@@ -7,22 +7,27 @@ on:
 
 jobs:
   setup:
-    name: 'Setup CI/CD'
+    name: Run tests
     runs-on: ubuntu-latest
     env:
-      NODE_ENV: 'production'
-      PORT: '5001'
+      NODE_ENV: development
     steps:
       - uses: actions/checkout@v2
-      - name: 'Install dependencies'
-        env:
-          NODE_ENV: 'development'
+      - name: Install dependencies
         run: npm install
-      - name: 'Run tests'
-        env:
-          NODE_ENV: 'development'
+      - name: Run tests
         run: npm run test
-      - name: 'Build application'
-        run: npm run build
-      - name: 'Show /dist'
-        run: ls dist
+
+  deploy:
+    name: Deploy container to Heroku
+    runs-on: ubuntu-latest
+    env:
+      HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Login to Heroku Container registry
+        run: heroku container:login
+      - name: Build and push container
+        run: heroku container:push -a ${{ secrets.HEROKU_APP_NAME }} web
+      - name: Release container
+        run: heroku container:release -a ${{ secrets.HEROKU_APP_NAME }} web
