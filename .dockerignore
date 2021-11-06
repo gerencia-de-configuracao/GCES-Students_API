@@ -1,0 +1,7 @@
+*
+!src/
+!build.js
+!index.ts
+!package*.json
+!tsconfig.json
+!tsconfig.prod.json
